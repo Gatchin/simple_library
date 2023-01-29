@@ -8,3 +8,4 @@ This project allows you to keep a digital record of books and readers in the lib
 * [Hibernate](https://hibernate.org) - Object–relational mapping tool
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [PostgreSQL](https://www.postgresql.org) - Relational database management system
+* [Thymeleaf](https://www.thymeleaf.org) - Template engine
