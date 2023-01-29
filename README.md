@@ -1,6 +1,8 @@
 # Project of the simpliest digital library
 
-This project allows you to keep a digital record of books and readers in the library
+This project allows you to keep a digital record of books and readers in the library. User can register readers, give them
+books and release books (after the reader returns
+book back to the library).
 
 ## Built With
 
