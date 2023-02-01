@@ -21,13 +21,15 @@ public class BookService {
         this.peopleRepository = peopleRepository;
     }
 
-    public List<Book> index(){
+    public List<Book> index() {
         return bookRepository.findAll();
     }
+
     @Transactional
     public void save(Book book) {
         bookRepository.save(book);
     }
+
     @Transactional
     public void update(int id, Book book) {
         Optional<Book> bookOptional = bookRepository.findById(id);
@@ -37,13 +39,15 @@ public class BookService {
         bookFromDB.setYear(book.getYear());
     }
 
-    public Book show(int id){
+    public Book show(int id) {
         return bookRepository.findById(id).orElse(null);
     }
+
     @Transactional
-    public void delete(int id){
+    public void delete(int id) {
         bookRepository.deleteById(id);
     }
+
     @Transactional
     public void add(int id, Person person) {
         Person personFromDB = peopleRepository.findById(person.getId()).orElse(null);
@@ -51,11 +55,17 @@ public class BookService {
         book.setPerson(personFromDB);
         bookRepository.save(book);
     }
+
     @Transactional
     public void deleteOwner(int id) {
         Book book = bookRepository.findById(id).orElse(null);
         assert book != null;
         book.setPerson(null);
         bookRepository.save(book);
+    }
+
+    public List<Book> search(String name) {
+//        String ignoreCaseString = name.toLowerCase();
+        return bookRepository.findByNameContainingIgnoreCase(name);
     }
 }

@@ -38,6 +38,13 @@ public class BooksController {
         return "redirect:/books";
     }
 
+
+    @GetMapping("/search")
+    public String search (@RequestParam(value = "name",required = false) String name, Model model){
+        model.addAttribute("foundBooks",bookService.search(name));
+        return "books/search";
+    }
+
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("book") Book book,
                          @PathVariable("id") int id) {

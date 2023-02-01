@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search result</title>
+</head>
+<body>
+<div th:if="${foundBooks.size()}==0">
+    <p>There is no such a book in our library</p>
+    <a href="/library">Back to home page</a>
+</div>
+<div th:if="${foundBooks.size()}!=0">
+    <p>Search results:</p>
+    <div th:each="book:${foundBooks}">
+        <a th:href="@{/books/{id}(id = ${book.getId()})}"
+           th:text="${book.getName()}+', '+${book.getAuthor()}+', '+${book.getYear()}">user</a>
+    </div>
+</div>
+<br>
+</body>
+</html>
