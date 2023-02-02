@@ -1,5 +1,6 @@
 package com.polozov.spring.services;
 
+import com.polozov.spring.models.Book;
 import com.polozov.spring.models.Person;
 import com.polozov.spring.repositories.PeopleRepository;
 import org.hibernate.Hibernate;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,10 @@ public class PeopleService {
         Person foundPerson = person.orElse(null);
         assert foundPerson != null;
         Hibernate.initialize(foundPerson.getBooks());
+        for(Book book: foundPerson.getBooks()){
+            if(LocalDate.now().minusMonths(1).isAfter(book.getTakingTime()))
+                book.setOverdue(true);
+        }
         return foundPerson;
     }
 

@@ -13,7 +13,9 @@
     <br>
     <table>
         <tr th:each="book:${person.getBooks()}">
-            <td th:text="${book.getName()+', '+book.getAuthor()+', '+book.getYear()}">book</td>
+            <td th:style="${book.isOverdue()} ? 'color: red' : 'color: black' "
+                th:text="${book.getName()+', '+book.getAuthor()+', '+book.getYear()}">book
+            </td>
         </tr>
     </table>
 </div>

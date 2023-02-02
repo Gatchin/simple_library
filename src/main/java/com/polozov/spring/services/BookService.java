@@ -7,6 +7,7 @@ import com.polozov.spring.repositories.PeopleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,12 @@ public class BookService {
     }
 
     public Book show(int id) {
-        return bookRepository.findById(id).orElse(null);
+        Book book = bookRepository.findById(id).orElse(null);
+        assert book != null;
+        if(book.getPerson()!=null&&LocalDate.now().minusMonths(1).isAfter(book.getTakingTime())){
+            book.setOverdue(true);
+        }
+        return book;
     }
 
     @Transactional
@@ -52,6 +58,7 @@ public class BookService {
     public void add(int id, Person person) {
         Person personFromDB = peopleRepository.findById(person.getId()).orElse(null);
         Book book = bookRepository.findById(id).orElse(null);
+        book.setTakingTime(LocalDate.now());
         book.setPerson(personFromDB);
         bookRepository.save(book);
     }
@@ -61,11 +68,11 @@ public class BookService {
         Book book = bookRepository.findById(id).orElse(null);
         assert book != null;
         book.setPerson(null);
+        book.setTakingTime(null);
         bookRepository.save(book);
     }
 
     public List<Book> search(String name) {
-//        String ignoreCaseString = name.toLowerCase();
         return bookRepository.findByNameContainingIgnoreCase(name);
     }
 }

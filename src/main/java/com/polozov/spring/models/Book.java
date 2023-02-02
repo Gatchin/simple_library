@@ -2,6 +2,8 @@ package com.polozov.spring.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "Book")
 public class Book {
@@ -18,6 +20,28 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "person", referencedColumnName = "id")
     private Person person;
+    @Column(name = "takingTime")
+    @Temporal(TemporalType.DATE)
+    private LocalDate takingTime;
+
+    @Transient
+    private boolean isOverdue;
+
+    public boolean isOverdue() {
+        return isOverdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        isOverdue = overdue;
+    }
+
+    public LocalDate getTakingTime() {
+        return takingTime;
+    }
+
+    public void setTakingTime(LocalDate takingTime) {
+        this.takingTime = takingTime;
+    }
 
     public Book() {
     }
